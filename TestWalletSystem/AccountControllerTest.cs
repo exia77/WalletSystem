@@ -26,7 +26,7 @@ namespace WalletSystemTest
             var accountObjects = new AccountsModelObject
             {
                 AccountNumber = "123456789012",
-                Amount = 100
+                Balance = 100
             };
 
             _mockAccounts.Setup(x => x.UpdateBalance(accountObjects)).ReturnsAsync(accountObjects);
@@ -46,7 +46,7 @@ namespace WalletSystemTest
             var accountObjects = new AccountsModelObject
             {
                 AccountNumber = "",
-                Amount = 100
+                Balance = 100
             };
 
             var result = await controller.Deposit(accountObjects);
@@ -63,7 +63,7 @@ namespace WalletSystemTest
             var accountObjects = new AccountsModelObject
             {
                 AccountNumber = "123",
-                Amount = 0
+                Balance = 0
             };
 
             var result = await controller.Deposit(accountObjects);
@@ -82,7 +82,7 @@ namespace WalletSystemTest
             var accountObjects = new AccountsModelObject
             {
                 AccountNumber = "123456789012",
-                Amount = 100,
+                Balance = 100,
             };
 
             _mockAccounts.Setup(x => x.UpdateBalance(accountObjects)).ReturnsAsync(accountObjects);
@@ -102,7 +102,7 @@ namespace WalletSystemTest
             var accountObjects = new AccountsModelObject
             {
                 AccountNumber = "",
-                Amount = 100
+                Balance = 100
             };
 
             var result = await controller.Withdraw(accountObjects);
@@ -119,7 +119,7 @@ namespace WalletSystemTest
             var accountObjects = new AccountsModelObject
             {
                 AccountNumber = "123",
-                Amount = 0
+                Balance = 0
             };
 
             var result = await controller.Withdraw(accountObjects);
@@ -139,7 +139,7 @@ namespace WalletSystemTest
             {
                 AccountNumber = "123456789012",
                 AccountNumberTo = "12345",
-                Amount = 100,
+                Balance = 100,
             };
 
             _mockAccounts.Setup(x => x.UpdateBalance(accountObjects)).ReturnsAsync(accountObjects);
@@ -160,7 +160,7 @@ namespace WalletSystemTest
             {
                 AccountNumber = "",
                 AccountNumberTo = "12345",
-                Amount = 100
+                Balance = 100
             };
 
             var result = await controller.Transfer(accountObjects);
@@ -178,7 +178,7 @@ namespace WalletSystemTest
             {
                 AccountNumber = "12345",
                 AccountNumberTo = "",
-                Amount = 100
+                Balance = 100
             };
 
             var result = await controller.Transfer(accountObjects);
@@ -196,7 +196,7 @@ namespace WalletSystemTest
             {
                 AccountNumber = "123",
                 AccountNumberTo = "12345",
-                Amount = 0
+                Balance = 0
             };
 
             var result = await controller.Transfer(accountObjects);

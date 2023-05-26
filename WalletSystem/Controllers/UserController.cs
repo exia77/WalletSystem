@@ -9,6 +9,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using BusinessObjects;
+using BusinessLayer.BusinessInterface;
 using BusinessLayer;
 
 namespace WalletSystem.Controllers
@@ -52,28 +53,45 @@ namespace WalletSystem.Controllers
             {
                 if(string.IsNullOrWhiteSpace(usersObject.Username) || string.IsNullOrWhiteSpace(usersObject.Password))
                 {
-                    return BadRequest(new { Message = "Username and password is required." });
+                    return BadRequest(new ResultObject 
+                    {
+                        Success = false,
+                        ErrorMessage = "Username and password is required." 
+                    });
                 }
 
                 if (await _user.CheckUserExist(usersObject))
                 {
-                    return BadRequest(new { Message = "Username already exists." });
+                    return BadRequest(new ResultObject 
+                    { 
+                        Success = false,
+                        ErrorMessage = "Username already exists." 
+                    });
                 }
 
-                if(!await _user.Register(usersObject))
+                if (!await _user.Register(usersObject))
                 {
-                    return BadRequest(new { Message = "Invalid registration details. Please try again." });
+                    return BadRequest(new ResultObject 
+                    { 
+                        Success = false, 
+                        ErrorMessage = "Invalid registration details. Please try again."
+                    });
                 }
 
-                return Ok(new
+                return Ok(new ResultObject
                 {
-                    Message = "User registration successful!"
+                    Success = true,
+                    Message = $"Registration of username {usersObject.Username} is successful."
                 });
 
             }
             catch (Exception ex)
             {
-                return BadRequest(new { Message = ex.Message });
+                return BadRequest(new ResultObject
+                {
+                    Success = false,
+                    ErrorMessage = ex.Message,
+                });
             }
         }
 

@@ -41,7 +41,7 @@ namespace DatabaseLayer
                     while (await reader.ReadAsync())
                     {
                         validateAccount.UpdatedDate = reader.GetDateTime(0);
-                        validateAccount.Amount = reader.GetDecimal(1);
+                        validateAccount.Balance = reader.GetDecimal(1);
                     }
                     if (!reader.HasRows)
                     {
@@ -65,7 +65,7 @@ namespace DatabaseLayer
                 while (await reader2.ReadAsync())
                 {
                     validateAccount2.UpdatedDate = reader2.GetDateTime(0);
-                    validateAccount2.Amount = reader2.GetDecimal(1);
+                    validateAccount2.Balance = reader2.GetDecimal(1);
                 }
                 if (!reader2.HasRows)
                 {
@@ -96,9 +96,9 @@ namespace DatabaseLayer
 
                 if (accountsObject.TransactionType != ((TransactionType)0).ToString())
                 {
-                    if (checkAccount.Amount < accountsObject.Amount)
+                    if (checkAccount.Balance < accountsObject.Balance)
                     {
-                        accountsObject.ErrorMessage = $"Not enough balance. Current Balance: {checkAccount.Amount}, Amount Deducted: {accountsObject.Amount}";
+                        accountsObject.ErrorMessage = $"Not enough balance. Current Balance: {checkAccount.Balance}, Amount Deducted: {accountsObject.Balance}";
                         return accountsObject;
                     }
                 }
@@ -112,13 +112,13 @@ namespace DatabaseLayer
                 command.Parameters.AddWithValue("@AccountNoFrom", accountsObject.AccountNumber);
                 command.Parameters.AddWithValue("@AccountNoTo", accountsObject.AccountNumberTo);
                 command.Parameters.AddWithValue("@TransactionType", (TransactionType)Enum.Parse(typeof(TransactionType), accountsObject.TransactionType));
-                command.Parameters.AddWithValue("@Amount", accountsObject.Amount);
+                command.Parameters.AddWithValue("@Amount", accountsObject.Balance);
                 command.Parameters.AddWithValue("@UpdatedDate", checkAccount.UpdatedDate);
 
                 using var reader = await command.ExecuteReaderAsync();
                 while (await reader.ReadAsync())
                 {
-                    accountsObject.Amount = reader.GetDecimal(0);
+                    accountsObject.Balance = reader.GetDecimal(0);
                     accountsObject.EndBalance = reader.GetDecimal(1);
                     accountsObject.TransactionDate = reader.GetDateTime(2);
                     accountsObject.TransactionType = ((TransactionType)reader.GetInt32(3)).ToString();

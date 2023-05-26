@@ -578,7 +578,8 @@
         "dependencies": {
           "BusinessObjects": "1.0.0",
           "EntityFramework": "6.4.4",
-          "Microsoft.EntityFrameworkCore": "6.0.8"
+          "Microsoft.EntityFrameworkCore": "6.0.8",
+          "Microsoft.EntityFrameworkCore.Relational": "6.0.8"
         },
         "runtime": {
           "DatabaseLayer.dll": {}

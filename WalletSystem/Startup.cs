@@ -1,5 +1,7 @@
 using BusinessLayer;
 using DatabaseLayer;
+using DatabaseLayer.DatabaseContext;
+using BusinessLayer.BusinessInterface;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -11,12 +13,12 @@ namespace WalletSystem
 {
     public class Startup
     {
+
+        public IConfiguration Configuration { get; }
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
-
-        public IConfiguration Configuration { get; }
 
         public void ConfigureServices(IServiceCollection services)
         {
@@ -43,6 +45,9 @@ namespace WalletSystem
 
             string connectionString = Configuration.GetConnectionString("DefaultConnection");
             services.AddSingleton(connectionString);
+            services.AddDbContext<DbLayerContext>(options => options.UseSqlServer(connectionString));
+            
+            //Dependency Container
             services.AddScoped<IUsers, Users>();
             services.AddScoped<IAccounts, Accounts>();
         }

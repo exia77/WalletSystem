@@ -28,7 +28,7 @@ namespace WalletSystem.Controllers
                     return BadRequest(new { Message = "Account number is required." });
                 }
 
-                if (accountObjects.Amount <= 0.00M)
+                if (accountObjects.Balance <= 0.00M)
                 {
                     return BadRequest(new { Message = "Amount is required." });
                 }
@@ -61,7 +61,7 @@ namespace WalletSystem.Controllers
                     return BadRequest(new { Message = "Account number is required." });
                 }
 
-                if (accountObjects.Amount <= 0.00M)
+                if (accountObjects.Balance <= 0.00M)
                 {
                     return BadRequest(new { Message = "Amount is required." });
                 }
@@ -99,7 +99,7 @@ namespace WalletSystem.Controllers
                     return BadRequest(new { Message = "Account number to is required." });
                 }
 
-                if (accountObjects.Amount <= 0.00M)
+                if (accountObjects.Balance <= 0.00M)
                 {
                     return BadRequest(new { Message = "Amount is required." });
                 }
@@ -152,7 +152,7 @@ namespace WalletSystem.Controllers
             return new
             {
                 Message = $"{accountsObjects.TransactionType} money account number {accountsObjects.AccountNumber} successful.",
-                Balance = accountsObjects.Amount,
+                Balance = accountsObjects.Balance,
                 accountsObjects.TransactionDate,
                 accountsObjects.EndBalance
             };
